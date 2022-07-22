@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reward-deployment
+  labels:
+    app: reward-api
+spec:
+  selector:
+    matchLabels:
+      app: reward-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: reward-api
+    spec:
+      containers:
+      - name: reward-api
+        image: 'gcr.io/enopayment-ms/reward:v1.0'
+        ports:
+        - name: rewardsrvc
+          containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rewardsrvc
+spec:
+  selector:
+    app: reward-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    nodePort: 31677
+  type: NordPort

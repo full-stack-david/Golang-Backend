@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reward-cd-deployment
+  labels:
+    app: reward-api
+spec:
+  selector:
+    matchLabels:
+      app: reward-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: reward-api
+    spec:
+      containers:
+      - name: reward-api
+        image: DOCKER_IMAGE_NAME
+        ports:
+        - name: rewardcdsrvc
+          containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /_api/reward/health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rewardcdsrvc
+spec:
+  selector:
+    app: reward-api
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  type: NodePort

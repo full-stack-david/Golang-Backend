@@ -1,0 +1,12 @@
+{
+
+    "port" : "8080",
+    "FirestoreConfig" :{
+        "ServiceAccountKey" : "dropshipstorepos-firebase-adminsdk-j8rxe.json",
+        "DropshipDllServiceAccountKey" : "dropshipdll-firebase-adminsdk.json"
+    },
+    "JiraConfig" : {
+        "SecretKey"  : "",
+        "Endpoint" : ""
+    }
+}
